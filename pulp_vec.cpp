@@ -475,9 +475,11 @@ for (uint64_t i = 0; i < comm->total_recv; ++i)
         new_size = pulp->part_sizes[max_part] + pulp->part_size_changes[max_part] + 1 :
         new_size = (int64_t)((double)pulp->part_sizes[max_part] + multiplier*(double)pulp->part_size_changes[max_part] + 1.0);
 
-        pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
-        new_edge_size = pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
+        /*** changed for clang5.0 warning ***/
+        // pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
+        // new_edge_size = pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
         new_edge_size = (int64_t)((double)pulp->part_edge_sizes[max_part] + multiplier*(double)pulp->part_edge_size_changes[max_part] + (double)(out_degree));
+        /*** end changed for clang5.0 warning ***/
 
         pulp->part_cut_size_changes[part] < 0 ?
         new_cut_size = pulp->part_cut_sizes[part] + pulp->part_cut_size_changes[part] + 2*part_count - out_degree :
@@ -1123,9 +1125,11 @@ for (uint64_t i = 0; i < comm->total_recv; ++i)
         new_size = pulp->part_sizes[max_part] + pulp->part_size_changes[max_part] + (int64_t)vert_weight :
         new_size = (int64_t)((double)pulp->part_sizes[max_part] + multiplier*(double)pulp->part_size_changes[max_part] + (double)vert_weight);
 
-        pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
-        new_edge_size = pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
+        /*** changed for clang5.0 warning ***/
+        // pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
+        // new_edge_size = pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
         new_edge_size = (int64_t)((double)pulp->part_edge_sizes[max_part] + multiplier*(double)pulp->part_edge_size_changes[max_part] + (double)(out_degree));
+        /*** end changed for clang5.0 warning ***/
 
         pulp->part_cut_size_changes[part] < 0 ?
         new_cut_size = pulp->part_cut_sizes[part] + pulp->part_cut_size_changes[part] + diff_part :

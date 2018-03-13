@@ -381,9 +381,12 @@ for (uint64_t i = 0; i < comm->total_recv; ++i)
         pulp->part_sizes[max_part] + pulp->part_size_changes[max_part] + 1 :
         (int64_t)((double)pulp->part_sizes[max_part] + multiplier*(double)pulp->part_size_changes[max_part] + 1.0);
 
-        new_edge_size = pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
-        pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
+        /*** changed for clang5.0 warning ***/
+        // new_edge_size = pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
+        // pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
+        new_edge_size = 
         (int64_t)((double)pulp->part_edge_sizes[max_part] + multiplier*(double)pulp->part_edge_size_changes[max_part] + (double)out_degree);
+        /*** end changed for clang5.0 warning ***/
 
         if (new_size < (int64_t)(pulp->avg_size*vert_balance) &&
           new_edge_size < (int64_t)(pulp->avg_edge_size*pulp->max_e) )
@@ -863,9 +866,12 @@ for (uint64_t i = 0; i < comm->total_recv; ++i)
         pulp->part_sizes[max_part] + pulp->part_size_changes[max_part] + (int64_t)vert_weight :
         (int64_t)((double)pulp->part_sizes[max_part] + multiplier*(double)pulp->part_size_changes[max_part] + (double)vert_weight);
 
-        new_edge_size = pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
-        pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
+        /*** changed for clang5.0 warning ***/
+        // new_edge_size = pulp->part_edge_size_changes[max_part] + out_degree < 0 ?
+        // pulp->part_edge_sizes[max_part] + pulp->part_edge_size_changes[max_part] + out_degree :
+        new_edge_size = 
         (int64_t)((double)pulp->part_edge_sizes[max_part] + multiplier*(double)pulp->part_edge_size_changes[max_part] + (double)out_degree);
+        /*** end changed for clang5.0 warning ***/
 
         if (new_size < (int64_t)(pulp->avg_size*vert_balance) &&
           new_edge_size < (int64_t)(pulp->avg_edge_size*pulp->max_e) )
