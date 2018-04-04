@@ -191,4 +191,9 @@ void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
   MPI_Barrier(pulp_comm);
   return;
 }
+
+void FinalizeXtraPulp(int32_t *&final_parts) {
+  free(final_parts);
+  return;
+}
 }

@@ -29,5 +29,7 @@ extern bool verbose, debug, verify;
 void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
                      std::vector<VertexID> input_edges, int32_t *&final_parts,
                      uint64_t &total_vnum, uint64_t file_size);
+
+void FinalizeXtraPulp(int32_t *&final_parts);
 }
 #endif  // GRAPE_CONNECTOR_H_
