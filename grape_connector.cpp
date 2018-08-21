@@ -125,7 +125,7 @@ void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
   bool do_edge_balance = false;
   bool do_maxcut_balance = false;
   //  VertexID* origin_edges;
-  uint64_t edge_num;
+  uint64_t edge_num = input_edges.size() / 2;
 
   //  char c;
 

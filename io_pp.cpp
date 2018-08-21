@@ -69,14 +69,6 @@ namespace pulp{
 
       uint64_t nedges_global = file_size/(2);
       ggi->m = nedges_global;
-
-      *edge_num = nedges_global/nprocs;
-      
-      for(uint32_t i = 0;i < nedges_global%nprocs;i++) {
-        if((int)i == procid)
-          (*edge_num)++;
-      }
-      
       ggi->m_local_read = *edge_num;
 
       if (debug) {
