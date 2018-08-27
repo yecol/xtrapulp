@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "glog/logging.h"
+
 #include "comms.h"
 #include "config.h"
 #include "dist_graph.h"
@@ -28,7 +30,8 @@ extern int seed;
 extern bool verbose, debug, verify;
 void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
                      std::vector<VertexID> input_edges, int32_t *&final_parts,
-                     uint64_t &total_vnum, uint64_t file_size);
+                     uint64_t &total_vnum, uint64_t file_size, double vert_balance,
+                     double edge_balance);
 
 void FinalizeXtraPulp(int32_t *&final_parts);
 }
