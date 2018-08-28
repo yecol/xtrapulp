@@ -78,7 +78,8 @@ MPI_Comm pulp_comm;
 
 void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
                      std::vector<VertexID> input_edges, int32_t*& final_parts,
-                     uint64_t& total_vnum, uint64_t file_size) {
+                     uint64_t& total_vnum, uint64_t file_size, double vert_balance,
+                     double edge_balance) {
   srand(time(0));
   setbuf(stdout, 0);
 
@@ -107,8 +108,20 @@ void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
   parts_in[0] = '\0';
   strcat(input_filename, graph_name);
   int32_t num_parts = partnum;
-  double vert_balance = 1.1;
-  double edge_balance = 1.1;
+  if (vert_balance <= 1) {
+    LOG(INFO) << "vert_balance should be larger than 1";
+    LOG(INFO) << "original vert_balance is " << vert_balance
+              << " which is not larger than 1";
+    LOG(INFO) << "vert_balance is changed to default value(1.1)";
+    vert_balance = 1.1;
+  }
+  if (edge_balance <= 1) {
+    LOG(INFO) << "edge_balance should be larger than 1";
+    LOG(INFO) << "original edge_balance is " << vert_balance
+              << " which is not larger than 1";
+    LOG(INFO) << "edge_balance is changed to default value(1.1)";
+    edge_balance = 1.1;
+  }
   uint64_t num_runs = 1;
   //  bool output_time = true;
   bool output_quality = false;
@@ -122,7 +135,7 @@ void grape_connector(MPI_Comm comm_, int workernum, int workerID, int partnum,
   bool do_bfs_init = true;
   bool do_lp_init = false;
   bool do_repart = false;
-  bool do_edge_balance = false;
+  bool do_edge_balance = true;
   bool do_maxcut_balance = false;
   //  VertexID* origin_edges;
   uint64_t edge_num = input_edges.size() / 2;
